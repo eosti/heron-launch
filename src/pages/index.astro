@@ -1,81 +1,115 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+// import '@fontsource/merriweather'
+import '@fontsource/source-sans-pro'
+import '@fontsource/arimo'
+// Note that the API has a rate limit of 15 calls per hour
+const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
 ---
+<head>
+    <title>Has HERON Launched Yet?</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Counting down to UTAT's first satellite launch">
+    <meta name="keywords" content="HERON, satellite, launch, UTAT">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+</head>
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
+<body class="bg-gray-100">
+    <div id="launch" class="h-screen v-screen flex justify-center items-center text-center font-display">
+        <div class="m-auto">
+            <div class="text-4xl pt-4 sm:pt-0">
+                Has <span class="font-semibold text-[#313151]">HERON Mk. II</span> launched yet?
+            </div>
+            <div id="launchStatus" class="text-[15rem] md:text-[20rem] lg:text-[30rem] xl:text-[40rem] md:my-8"></div>
+            <div id="launchCountDown" class="text-6xl"></div>
+        </div>
+    </div>
+    <div id="info" class="flex-auto justify-center text-center">
+        <div class="text-4xl mb-6 font-display">About</div>
+        <div class="font-body m-auto max-w-lg px-4 lg:max-w-screen-lg">
+            <p>
+                HERON (High frequency Educational Radio communications On a Nanosatellite) Mk. II is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
+                Since 2017, HERON Mk. II has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
+            </p>
+            <p class="mt-4">
+                HERON will be launching in October on SpaceX's Transporter 9 rideshare mission, carried by a Falcon 9 rocket. 
+                You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems">visiting the UTAT website</a>. 
+            </p>
+        </div>
+        <div class="text-4xl mt-24 mb-6 font-display px-4">Testimonials</div>
+        <div class="flex flex-wrap justify-center mb-8 font-body px-4">
+            <div class="mx-12 mb-8">
+                <div class="text-2xl">"Building a satellite is hard!"</div>
+                <div class="">&mdash; Toike, 2023</div>
+            </div>
+            <div class="mx-12 mb-8">
+                <div class="text-2xl">"Nah."</div>
+                <div class="">&mdash; Hans</div>
+            </div>
+            <div class="mx-12 mb-8">
+                <div class="text-2xl">"2/10, not actually a bird"</div>
+                <div class="">&mdash; My partner, a birdwatcher</div>
+            </div>
+        </div>
+        <div class="text-gray-300 font-display mt-16 mb-4 mx-4 text-s">
+            <p>This site is just for fun, and is not affiliated with UTAT, the University of Toronto, or Skule.</p>
+        </div>
+    </div>
+</body>
+    
+
+<script>
+    var response = await fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
+
+    // For testing only
+    // var response = await fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
+
+    var fallback_data = {fallback_data}
+
+    var space_data = null
+    if (!response.ok) {
+        console.log("API rate limit hit; using fallback data")
+        space_data = fallback_data.json()
+    } else {
+        space_data = await response.json()
+    }
+
+    var net = new Date(space_data.net)
+
+    var intervalID = setInterval(updateTime, 1000)
+
+    function updateTime() {
+        var curtime = new Date()
+        var diff = curtime - net
+
+        var timestring = 'L';
+        if (diff < 0) {
+            timestring += '<span class="text-7xl relative">-'
+        } else {
+            timestring += '<span class="text-7xl relative -top-1">+'
+        }
+            timestring += "</span>"
+
+        var days = Math.round(Math.abs(diff) / (24 * 60 * 60 * 1000))
+        var hours = Math.round(Math.abs(diff) % (24 * 60 * 60 * 1000) / 60 / 60 / 1000)
+        var mins = Math.round(Math.abs(diff) % (60 * 60 * 1000) / 60 / 1000)
+        var seconds = Math.round(Math.abs(diff) % (1000 * 60) / 1000)
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        mins = (mins < 10) ? "0" + mins : mins;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        timestring += days + ":" + hours + ":" + mins + ":" + seconds
+
+
+        var statusstring;
+        if (curtime - net > 0) {
+            statusstring = "YES"
+        } else {
+            statusstring = "NO"
+        }
+
+        document.getElementById("launchStatus").innerHTML = statusstring;
+        document.getElementById("launchCountDown").innerHTML = timestring;
+    }
+</script>
