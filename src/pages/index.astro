@@ -81,34 +81,38 @@ const fallback_data = await resp.json()
 </body>
     
 
-<script>
-    var response = await fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
+<script define:vars={{ fallback_data }}>
+    var spacedata;
+    var net;
 
+    fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
     // For testing only
-    // var response = await fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
+    //fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
+    .then(res => res.json())
+    .then(out => parseTime(out))
+    .catch(err => fallbackTime(err));
 
-    var fallback_data = {fallback_data}
 
-    var space_data = null
-    if (!response.ok) {
+    function parseTime(out) {
+        space_data = out;
+        net = new Date(spacedata.net)
+        var intervalID = setInterval(updateTime, 1000)
+    }
+
+    function fallbackTime(err) {
         console.log("API rate limit hit; using fallback data")
         space_data = fallback_data
-        console.log(fallback_data)
-    } else {
-        space_data = await response.json()
+
+        net = new Date(space_data.net)
+
+        if (net instanceof Date && isFinite(net)) {
+            var intervalID = setInterval(updateTime, 1000)
+        } else {
+            console.log("Data does not exist or is invalid!")
+            document.getElementById("launchStatus").innerHTML = "MAYBE";
+            document.getElementById("launchCountDown").innerHTML = "Unable to get launch info";
+        }
     }
-
-    var net = new Date(space_data.net)
-    console.log(net)
-
-    if (net instanceof Date && isFinite(net)) {
-        var intervalID = setInterval(updateTime, 1000)
-    } else {
-        console.log("Data does not exist or is invalid!")
-        document.getElementById("launchStatus").innerHTML = "MAYBE";
-        document.getElementById("launchCountDown").innerHTML = "Unable to get launch info";
-    }
-
 
     function updateTime() {
         var curtime = new Date()
@@ -122,10 +126,10 @@ const fallback_data = await resp.json()
         }
             timestring += "</span>"
 
-        var days = Math.round(Math.abs(diff) / (24 * 60 * 60 * 1000))
-        var hours = Math.round(Math.abs(diff) % (24 * 60 * 60 * 1000) / 60 / 60 / 1000)
-        var mins = Math.round(Math.abs(diff) % (60 * 60 * 1000) / 60 / 1000)
-        var seconds = Math.round(Math.abs(diff) % (1000 * 60) / 1000)
+        var days = Math.floor(Math.abs(diff) / (24 * 60 * 60 * 1000))
+        var hours = Math.floor(Math.abs(diff) % (24 * 60 * 60 * 1000) / 60 / 60 / 1000)
+        var mins = Math.floor(Math.abs(diff) % (60 * 60 * 1000) / 60 / 1000)
+        var seconds = Math.floor(Math.abs(diff) % (1000 * 60) / 1000)
 
         hours = (hours < 10) ? "0" + hours : hours;
         mins = (mins < 10) ? "0" + mins : mins;
