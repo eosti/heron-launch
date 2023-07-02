@@ -31,44 +31,48 @@ const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f
 
 
 <body class="bg-gray-100">
-    <div id="launch" class="h-screen v-screen flex justify-center items-center text-center font-display">
-        <div class="m-auto h-auto">
-            <h2 class="text-4xl pt-4 px-4">
+    <div id="launch" class="h-screen w-screen flex justify-center items-center text-center font-display">
+        <div class="m-auto w-auto h-auto">
+            <h2 class="text-4xl pt-4 px-4 ">
                 Has <span class="font-bold text-[#313151]">HERON Mk. II</span> launched yet?
             </h2>
             <div id="launchStatus" class="text-[15rem] md:text-[20rem] lg:text-[30rem] xl:text-[40rem] md:my-8 leading-tight"></div>
             <h2 id="launchCountDown" class="text-6xl px-4"></h2>
         </div>
     </div>
-    <div id="info" class="flex-auto justify-center text-center">
-        <h2 class="text-4xl mb-6 font-display">About</h2>
-        <div class="font-body m-auto max-w-none md:max-w-screen-md px-4 lg:max-w-screen-lg text-lg">
-            <p>
-                HERON (High frequency Educational Radio communications On a Nanosatellite) Mk. II is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
-                Since 2017, HERON Mk. II has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
-            </p>
-            <p class="mt-4">
-                HERON will be launching on top of a Falcon 9 rocket in October aboard SpaceX's Transporter 9 rideshare mission.
-                Following deployment, HERON will begin regular operations for a mission lifespan of one year.
-                You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems" target=”_blank”>visiting the UTAT website</a>. 
-            </p>
-        </div>
-        <h2 class="text-4xl mt-24 mb-6 font-display px-4">Testimonials</h2>
-        <div class="flex flex-col md:flex-row md:flex-nowrap justify-center mb-8 font-body px-4">
-            <div class="pr-12 pl-8 mb-8 w-auto">
-                <h3 class="text-2xl w-auto">"Building a satellite is hard!"</h3>
-                <p class="text-lg">&mdash; Toike, 2023</p>
-            </div>
-            <div class="px-12 mb-8 w-auto">
-                <h3 class="text-2xl">"Nah."</h3>
-                <p class="text-lg">&mdash; Hans</p>
-            </div>
-            <div class="pl-12 pr-8 mb-8 w-auto">
-                <h3 class="text-2xl auto">"2/10, not actually a bird"</h3>
-                <p class="text-lg">&mdash; My partner, a birdwatcher</p>
+    <div id="notLaunchStuff" class="w-screen max-h-max">
+        <div id="info" class="flex-auto justify-center text-center">
+            <h2 class="text-4xl mb-6 font-display">About</h2>
+            <div class="font-body m-auto max-w-none md:max-w-screen-md px-4 lg:max-w-screen-lg">
+                <p class="text-lg">
+                    HERON (High frequency Educational Radio communications On a Nanosatellite) Mk. II is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
+                    Since 2017, HERON Mk. II has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
+                </p>
+                <p class="mt-4 text-lg">
+                    HERON will be launching on top of a Falcon 9 rocket in October aboard SpaceX's Transporter 9 rideshare mission.
+                    Following deployment, HERON will begin regular operations for a mission lifespan of one year.
+                    You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems" target=”_blank”>visiting the UTAT website</a>. 
+                </p>
             </div>
         </div>
-        <div class="text-gray-300 font-display mt-16 mb-4 mx-4 text-sm">
+        <div id="testimonials" class="justify-center text-center h-auto w-auto">
+            <h2 class="text-4xl mt-24 mb-6 font-display px-4">Testimonials</h2>
+            <div class="flex flex-col md:flex-row md:flex-nowrap justify-center mb-8 font-body px-4">
+                <div class="pr-12 pl-8 mb-8 w-auto">
+                    <h3 class="text-2xl w-auto">"Building a satellite is hard!"</h3>
+                    <p class="text-lg">&mdash; Toike, 2023</p>
+                </div>
+                <div class="px-12 mb-8 w-auto">
+                    <h3 class="text-2xl">"Nah."</h3>
+                    <p class="text-lg">&mdash; Hans</p>
+                </div>
+                <div class="pl-12 pr-8 mb-8 w-auto">
+                    <h3 class="text-2xl auto">"2/10, not actually a bird"</h3>
+                    <p class="text-lg">&mdash; My partner, a birdwatcher</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-gray-300 font-display mt-16 mb-4 mx-4 text-sm justify-center text-center">
             <p>This site is not affiliated with UTAT, the University of Toronto, or Skule. It's just for fun!</p>
         </div>
     </div>
@@ -76,10 +80,10 @@ const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f
     
 
 <script>
-    var response = await fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
+    // var response = await fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
 
     // For testing only
-    // var response = await fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
+    var response = await fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
 
     var fallback_data = {fallback_data}
 
