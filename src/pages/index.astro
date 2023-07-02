@@ -36,34 +36,34 @@ const fallback_data = await resp.json()
 
 
 <body class="bg-gray-100">
-    <div id="launch" class="h-screen w-screen flex justify-center items-center text-center font-display">
+    <div id="launch" class="h-screen mx-4 flex justify-center items-center text-center font-display">
         <div class="m-auto h-auto w-full">
-            <h2 class="text-4xl pt-4 px-4 w-full">
+            <h2 class="text-4xl pt-4 w-full">
                 Has <span class="font-bold text-[#313151]">HERON Mk. II</span> launched yet?
             </h2>
             <div id="launchStatus" class="w-full text-[20vh] md:text-[30vh] xl:text-[40vh] md:my-8 leading-snug md:leading-tight"></div>
-            <h2 id="launchCountDown" class="text-4xl md:text-6xl px-4 w-full clip"></h2>
+            <h2 id="launchCountDown" class="text-4xl md:text-6xl w-full clip"></h2>
         </div>
     </div>
 
-    <div id="notLaunchStuff" class="w-screen max-h-max">
+    <div id="notLaunchStuff" class="mx-4 max-h-max">
         <div id="info" class="flex-auto justify-center text-center">
             <h2 class="text-4xl mb-6 font-display">About</h2>
-            <div class="font-body m-auto max-w-none md:max-w-screen-md lg:max-w-screen-lg px-4 text-base">
+            <div class="font-body m-auto max-w-none md:max-w-screen-md lg:max-w-screen-lg text-base">
                 <p class="block">
-                    HERON (High frequency Educational Radio communications On a Nanosatellite) Mk. II is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
-                    Since 2017, HERON Mk. II has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
+                    HERON Mk. II (High frequency Educational Radio communications On a Nanosatellite) is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
+                    Since 2017, HERON has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
                 </p>
                 <p class="mt-4 block">
-                    HERON will be launching on top of a Falcon 9 rocket in October aboard SpaceX's Transporter 9 rideshare mission.
-                    Following deployment, HERON will begin regular operations for a mission lifespan of one year.
+                    In October, HERON will hitch a ride aboard a Falcon 9 rocket on SpaceX's Transporter 9 rideshare mission to reach low-Earth orbit. 
+                    Following deployment, HERON will begin regular operations for a mission lifespan of one year, providing querying capabilities in the amateur UHF band.
                     You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems" target=”_blank”>visiting the UTAT website</a>. 
                 </p>
             </div>
         </div>
         <div id="testimonials" class="justify-center text-center h-auto w-auto">
-            <h2 class="text-4xl mt-24 mb-6 font-display px-4">Testimonials</h2>
-            <div class="flex flex-col lg:flex-row lg:flex-nowrap justify-around mb-8 mx-auto font-body px-4 max-w-none md:max-w-screen-md lg:max-w-screen-lg">
+            <h2 class="text-4xl mt-24 mb-6 font-display">Testimonials</h2>
+            <div class="flex flex-col lg:flex-row lg:flex-nowrap justify-around mb-8 mx-auto font-body max-w-none md:max-w-screen-md lg:max-w-screen-lg">
                 <div class="mb-8">
                     <h3 class="text-2xl w-auto block">"Building a satellite is hard!"</h3>
                     <p class="text-base block">&mdash; Toike, 2023</p>
@@ -78,7 +78,7 @@ const fallback_data = await resp.json()
                 </div>
             </div>
         </div>
-        <div class="text-gray-300 font-display pt-16 pb-2 px-4 text-sm justify-center text-center max-w-none md:max-w-screen-md m-auto block">
+        <div class="text-gray-300 font-display pt-16 pb-2 text-sm justify-center text-center max-w-none md:max-w-screen-md m-auto block">
             <p>This site is not affiliated with UTAT, the University of Toronto, or Skule. It's just for fun!</p>
         </div>
     </div>
@@ -92,7 +92,13 @@ const fallback_data = await resp.json()
     fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
     // For testing only
     // fetch("https://lldev.thespacedevs.com/2.2.0/launch/e521d1a4-7f67-4a13-aaaa-c8faec0e824c/", {mode: 'cors'})
-    .then(res => res.json())
+    .then(res => {
+        if (res.ok) {
+            return res.json()
+        } else {
+            throw new Error('Non-successful fetch!')
+        }
+    })
     .then(out => parseTime(out))
     .catch(err => fallbackTime(err));
 
@@ -113,7 +119,7 @@ const fallback_data = await resp.json()
             var intervalID = setInterval(updateTime, 1000)
         } else {
             console.log("Data does not exist or is invalid!")
-            document.getElementById("launchStatus").innerHTML = "MAYBE";
+            document.getElementById("launchStatus").innerHTML = "<span class='text-[12vh] md:text-[18vh] lg:text-[24vh] leading-loose'>MAYBE</span>";
             document.getElementById("launchCountDown").innerHTML = "<span class='text-4xl'>I can't get the launch info right now!</span>";
         }
     }
@@ -124,7 +130,7 @@ const fallback_data = await resp.json()
 
         var timestring = 'L';
         if (diff < 0) {
-            timestring += '<span class="text-7xl">-'
+            timestring += '<span class="text-5xl md:text-7xl">-'
         } else {
             timestring += '<span class="text-5xl md:text-7xl relative md:-top-1">+'
         }
