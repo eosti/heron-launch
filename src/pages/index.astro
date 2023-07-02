@@ -3,7 +3,8 @@
 import '@fontsource/source-sans-pro'
 import '@fontsource/arimo'
 // Note that the API has a rate limit of 15 calls per hour
-const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
+const resp = await fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f3d9-467e-ac58-6e577155a969/", {mode: 'cors'})
+const fallback_data = await resp.json()
 ---
 <head>
     <title>Has HERON Launched Yet?</title>
@@ -45,11 +46,11 @@ const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f
         <div id="info" class="flex-auto justify-center text-center">
             <h2 class="text-4xl mb-6 font-display">About</h2>
             <div class="font-body m-auto max-w-none md:max-w-screen-md lg:max-w-screen-lg px-4">
-                <p class="text-lg">
+                <p class="text-lg block">
                     HERON (High frequency Educational Radio communications On a Nanosatellite) Mk. II is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
                     Since 2017, HERON Mk. II has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
                 </p>
-                <p class="mt-4 text-lg">
+                <p class="mt-4 text-lg block">
                     HERON will be launching on top of a Falcon 9 rocket in October aboard SpaceX's Transporter 9 rideshare mission.
                     Following deployment, HERON will begin regular operations for a mission lifespan of one year.
                     You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems" target=”_blank”>visiting the UTAT website</a>. 
@@ -59,21 +60,21 @@ const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f
         <div id="testimonials" class="justify-center text-center h-auto w-auto">
             <h2 class="text-4xl mt-24 mb-6 font-display px-4">Testimonials</h2>
             <div class="flex flex-col md:flex-row md:flex-nowrap justify-center mb-8 mx-auto font-body px-4 max-w-none md:max-w-screen-md lg:max-w-screen-lg">
-                <div class="pr-12 pl-8 mb-8 w-auto">
-                    <h3 class="text-2xl w-auto">"Building a satellite is hard!"</h3>
-                    <p class="text-lg">&mdash; Toike, 2023</p>
+                <div class="pr-12 pl-8 mb-8 w-auto mx-auto">
+                    <h3 class="text-2xl w-auto inline-block">"Building a satellite is hard!"</h3>
+                    <p class="text-lg inline-block">&mdash; Toike, 2023</p>
                 </div>
                 <div class="px-12 mb-8 w-auto">
-                    <h3 class="text-2xl">"Nah."</h3>
-                    <p class="text-lg">&mdash; Hans</p>
+                    <h3 class="text-2xl inline-block">"Nah."</h3>
+                    <p class="text-lg inline-block">&mdash; Hans</p>
                 </div>
                 <div class="pl-12 pr-8 mb-8 w-auto">
-                    <h3 class="text-2xl auto">"2/10, not actually a bird"</h3>
-                    <p class="text-lg">&mdash; My partner, a birdwatcher</p>
+                    <h3 class="text-2xl auto inline-block">"2/10, not actually a bird"</h3>
+                    <p class="text-lg inline-block">&mdash; My partner, a birdwatcher</p>
                 </div>
             </div>
         </div>
-        <div class="text-gray-300 font-display mt-16 mb-4 px-4 text-sm justify-center text-center max-w-none md:max-w-screen-md mx-auto">
+        <div class="text-gray-300 font-display pt-16 pb-4 px-4 text-sm justify-center text-center max-w-none md:max-w-screen-md m-auto block">
             <p>This site is not affiliated with UTAT, the University of Toronto, or Skule. It's just for fun!</p>
         </div>
     </div>
@@ -91,14 +92,23 @@ const fallback_data = fetch("https://ll.thespacedevs.com/2.2.0/launch/a4a7fa7f-f
     var space_data = null
     if (!response.ok) {
         console.log("API rate limit hit; using fallback data")
-        space_data = fallback_data.json()
+        space_data = fallback_data
+        console.log(fallback_data)
     } else {
         space_data = await response.json()
     }
 
     var net = new Date(space_data.net)
+    console.log(net)
 
-    var intervalID = setInterval(updateTime, 1000)
+    if (net instanceof Date && isFinite(net)) {
+        var intervalID = setInterval(updateTime, 1000)
+    } else {
+        console.log("Data does not exist or is invalid!")
+        document.getElementById("launchStatus").innerHTML = "MAYBE";
+        document.getElementById("launchCountDown").innerHTML = "Unable to get launch info";
+    }
+
 
     function updateTime() {
         var curtime = new Date()
