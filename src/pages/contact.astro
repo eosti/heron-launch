@@ -1,0 +1,83 @@
+---
+import '@fontsource/source-sans-pro'
+import '@fontsource/arimo'
+---
+
+<head>
+    <title>Has HERON Launched Yet?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Counting down to UTAT's first satellite launch">
+    <meta name="keywords" content="HERON, satellite, launch, UTAT">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <style>
+            @tailwind base;
+            @tailwind components;
+            @tailwind utilities;
+            @font-face {
+            font-family: 'texgyreheros';
+            src: url('/fonts/texgyreheros-regular.otf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'texgyreheros';
+            src: url('/fonts/texgyreheros-bold.otf');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+    </style>
+</head>
+
+
+<body class="bg-gray-100">
+    <div id="launch" class="h-screen mx-4 flex justify-center items-center text-center font-display">
+        <div class="m-auto h-auto w-full">
+            <h2 class="text-4xl pt-4 w-full">
+                Have we made contact with <span class="font-bold text-[#313151]">HERON Mk. II</span> yet?
+            </h2>
+            <div id="launchStatus" class="w-full text-[20vh] md:text-[30vh] xl:text-[40vh] md:my-8 leading-snug md:leading-tight">NO</div>
+            <h2 id="launchCountDown" class="text-4xl md:text-6xl w-full clip">We're working on it, y'all</h2>
+            <h2 id="launchCountDown" class="text-xl md:text-2xl w-full clip pt-4">Trust me, you'll know when we make contact.</h2>
+        </div>
+    </div>
+
+    <div id="notLaunchStuff" class="mx-4 max-h-max">
+        <div id="info" class="flex-auto justify-center text-center">
+            <h2 class="text-4xl mb-6 font-display">About</h2>
+            <div class="font-body m-auto max-w-none md:max-w-screen-md lg:max-w-screen-lg text-base">
+                <p class="block">
+                    HERON Mk. II (High frequency Educational Radio communications On a Nanosatellite) is an amateur radio cubesat designed by the University of Toronto Aerospace Team (UTAT).
+                    Since 2017, HERON has been under development, undergoing changes in mission scope, surviving regulatory hurdles, and providing aerospace design opportunities to many University of Toronto undergrads.
+                </p>
+                <p class="mt-4 block">
+                    In Fall 2023, HERON will hitch a ride aboard a Falcon 9 rocket on SpaceX's Transporter 9 rideshare mission to reach low-Earth orbit. 
+                    Following deployment, HERON will begin regular operations for a mission lifespan of one year, providing querying capabilities in the amateur UHF band.
+                    You can learn more about the HERON mission by <a class="text-blue-800 hover:text-blue-600" href="https://www.utat.ca/space-systems" target=”_blank”>visiting the UTAT website</a>. 
+                </p>
+            </div>
+        </div>
+        <div id="testimonials" class="justify-center text-center h-auto w-auto">
+            <h2 class="text-4xl mt-24 mb-6 font-display">Quotes</h2>
+            <div class="flex flex-col lg:flex-row lg:flex-nowrap justify-around mb-8 mx-auto font-body max-w-none md:max-w-screen-md lg:max-w-screen-lg">
+                <div class="mb-8">
+                    <h3 class="text-2xl w-auto block">"Have we made contact yet?"</h3>
+                    <p class="text-base block">&mdash; Aurora N, January 03, 2024</p>
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-2xl auto block">"'Bout to make contact... With these fists!"</h3>
+                    <p class="text-base block">&mdash; Me, shortly before the arrest</p>
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-2xl block">"So, any progress so far?"</h3>
+                    <p class="text-base block">&mdash; Ben N, every week or so</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-gray-300 font-display pt-16 pb-2 text-sm justify-center text-center max-w-none md:max-w-screen-md m-auto block">
+            <p>This site is not affiliated with UTAT, the University of Toronto, or Skule. It's just for fun!</p>
+        </div>
+    </div>
+</body>

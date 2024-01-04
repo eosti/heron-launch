@@ -7,7 +7,4 @@ export default defineConfig({
     integrations: [tailwind()],
     site: 'https://hasheronlaunchedyet.com',
     
-    experimental: {
-        redirects: true
-    },
 });
