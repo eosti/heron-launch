@@ -1,8 +1,9 @@
 ---
+const redirectStr = "0; URL=" + Astro.site.toString()
 ---
 
 <head>
-    <meta http-equiv="refresh" content="0; URL={Astro.site}" />
+    <meta http-equiv="refresh" content={redirectStr} />
     <title>404 - redirect</title>
 </head>
 
